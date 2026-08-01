@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\TaskController;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +27,9 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     // Authentication
     Route::post('/logout', [AuthController::class, 'logout']);
+
+    // Dashboard
+    Route::get('/dashboard', DashboardController::class);
 
     // Projects
     Route::apiResource('projects', ProjectController::class);
