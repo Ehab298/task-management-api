@@ -133,7 +133,7 @@ The project follows Laravel best practices and includes:
 Clone the repository
 
 ```bash
-https://github.com/Ehab298/task-management-api.git
+git clone https://github.com/Ehab298/task-management-api.git
 ```
 
 Move into the project
@@ -216,13 +216,13 @@ Use the following credentials:
 Email
 
 ```text
-ailmohammed@gmail.com
+test@example.com
 ```
 
 Password
 
 ```text
-Thankyou6
+password
 ```
 
 ---
@@ -253,12 +253,13 @@ Thankyou6
 
 ## Tasks
 
-| Method    | Endpoint        |
-| --------- | --------------- |
-| GET       | /api/tasks      |
-| POST      | /api/tasks      |
-| PUT/PATCH | /api/tasks/{id} |
-| DELETE    | /api/tasks/{id} |
+| Method    | Endpoint                  |
+| --------- | ------------------------- |
+| GET       | /api/tasks                |
+| GET       | /api/tasks/{id}           |
+| POST      | /api/projects/{id}/tasks  |
+| PUT/PATCH | /api/tasks/{id}           |
+| DELETE    | /api/tasks/{id}           |
 
 Supported query parameters:
 
@@ -284,15 +285,42 @@ Example:
 
 # 📬 Postman Collection
 
-A Postman collection is included with this project.
+A Postman **collection** and an **environment file** are included in the [`postman/`](postman) folder so you can test the whole API out of the box.
 
-Collection Name:
+| File | Description |
+| ---- | ----------- |
+| `postman/Task management.postman_collection.json` | All endpoints (Auth, Projects, Tasks, Dashboard) |
+| `postman/Task Management Local.postman_environment.json` | Local environment variables |
 
-```text
-Task Management
-```
+### Import
 
-Import the collection into Postman to test all API endpoints.
+1. Open Postman → **Import** → drag both files from the `postman/` folder.
+2. In the top-right environment selector, pick **Task Management - Local**.
+
+### Environment Variables
+
+| Variable | Value | Purpose |
+| -------- | ----- | ------- |
+| `url` | `http://127.0.0.1:8000/api/` | Base URL (trailing slash required) |
+| `TOKEN` | _paste your access token_ | Bearer token for Projects, Tasks, Dashboard |
+| `auth_secret_11sp` | _paste your access token_ | Bearer token for the **logout** request |
+| `project_id` / `task_id` | `1` | Optional convenience ids |
+
+### How to authenticate
+
+1. Send **Auth user → register** (or **login**).
+2. Copy the `access_token` from the response body.
+3. Edit the environment (eye icon → Edit) and paste it into **`TOKEN`** **and** **`auth_secret_11sp`**.
+
+> Tip — auto-capture the token. Add this snippet to the **Tests** tab of the `register` and `login` requests:
+>
+> ```javascript
+> const res = pm.response.json();
+> if (res.access_token) {
+>   pm.environment.set("TOKEN", res.access_token);
+>   pm.environment.set("auth_secret_11sp", res.access_token);
+> }
+> ```
 
 ---
 
