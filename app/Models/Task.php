@@ -24,20 +24,17 @@ class Task extends Model
 
     public const PRIORITY_HIGH = 'high';
 
-
     public const STATUSES = [
         self::STATUS_TODO,
         self::STATUS_IN_PROGRESS,
         self::STATUS_DONE,
     ];
 
-
     public const PRIORITIES = [
         self::PRIORITY_LOW,
         self::PRIORITY_MEDIUM,
         self::PRIORITY_HIGH,
     ];
-
 
     protected $fillable = [
         'project_id',
@@ -50,24 +47,20 @@ class Task extends Model
         'completed_at',
     ];
 
-
     protected $casts = [
         'due_date' => 'date',
         'completed_at' => 'datetime',
     ];
-
 
     public function project(): BelongsTo
     {
         return $this->belongsTo(Project::class);
     }
 
-
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
-
 
     public function scopeOverdue(Builder $query): Builder
     {
@@ -75,6 +68,27 @@ class Task extends Model
             ->where('status', '!=', self::STATUS_DONE);
     }
 
+    /**
+     * Scope a query to filter tasks by the given filters.
+     *
+     * @param  array<string, mixed>  $filters
+     */
+    public function scopeFilter(Builder $query, array $filters): Builder
+    {
+        if (! empty($filters['status'])) {
+            $query->where('status', $filters['status']);
+        }
+
+        if (! empty($filters['priority'])) {
+            $query->where('priority', $filters['priority']);
+        }
+
+        if (! empty($filters['search'])) {
+            $query->where('title', 'like', '%'.$filters['search'].'%');
+        }
+
+        return $query;
+    }
 
     public function markAsDone(): bool
     {

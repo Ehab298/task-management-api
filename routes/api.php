@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ProjectController;
+use App\Http\Controllers\Api\TaskController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,4 +29,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Projects
     Route::apiResource('projects', ProjectController::class);
+
+    // Tasks (created within a project, otherwise standalone with global filtering)
+    Route::post('/projects/{project}/tasks', [TaskController::class, 'store']);
+    Route::apiResource('tasks', TaskController::class)->except('store');
 });
