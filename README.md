@@ -287,10 +287,6 @@ Example:
 
 A Postman **collection** and an **environment file** are included in the [`postman/`](postman) folder so you can test the whole API out of the box.
 
-| File | Description |
-| ---- | ----------- |
-| `postman/Task management.postman_collection.json` | All endpoints (Auth, Projects, Tasks, Dashboard) |
-| `postman/Task Management Local.postman_environment.json` | Local environment variables |
 
 ### Import
 
