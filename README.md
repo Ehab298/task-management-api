@@ -297,23 +297,7 @@ A Postman **collection** and an **environment file** are included in the [`postm
 1. Open Postman → **Import** → drag both files from the `postman/` folder.
 2. In the top-right environment selector, pick **Task Management - Local**.
 
-### How to authenticate
 
-1. Send **Auth user → register** (or **login**).
-2. Copy the `access_token` from the response body.
-3. Edit the environment (eye icon → Edit) and paste it into **`TOKEN`** **and** **`auth_secret_11sp`**.
-
-> Tip — auto-capture the token. Add this snippet to the **Tests** tab of the `register` and `login` requests:
->
-> ```javascript
-> const res = pm.response.json();
-> if (res.access_token) {
->   pm.environment.set("TOKEN", res.access_token);
->   pm.environment.set("auth_secret_11sp", res.access_token);
-> }
-> ```
-
----
 
 # 🌱 Database Seeders
 
