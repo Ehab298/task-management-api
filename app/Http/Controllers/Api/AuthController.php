@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-
     public function register(RegisterRequest $request): JsonResponse
     {
         $user = User::create([
@@ -22,18 +21,8 @@ class AuthController extends Controller
             'password' => $request->password,
         ]);
 
-        $token = $user->createToken('auth_token')->plainTextToken;
-
-        return (new UserResource($user))
-            ->additional([
-                'message' => 'User registered successfully.',
-                'access_token' => $token,
-                'token_type' => 'Bearer',
-            ])
-            ->response()
-            ->setStatusCode(201);
+        return $this->respondWithToken($user, 'User registered successfully.', 201);
     }
-
 
     public function login(LoginRequest $request): JsonResponse
     {
@@ -45,18 +34,8 @@ class AuthController extends Controller
             ], 401);
         }
 
-        $token = $user->createToken('auth_token')->plainTextToken;
-
-        return (new UserResource($user))
-            ->additional([
-                'message' => 'Login successful.',
-                'access_token' => $token,
-                'token_type' => 'Bearer',
-            ])
-            ->response()
-            ->setStatusCode(200);
+        return $this->respondWithToken($user, 'Login successful.');
     }
-
 
     public function logout(Request $request): JsonResponse
     {
@@ -65,5 +44,22 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'Logged out successfully.',
         ]);
+    }
+
+    /**
+     * Build a JSON response wrapping the user resource with a freshly issued token.
+     */
+    private function respondWithToken(User $user, string $message, int $status = 200): JsonResponse
+    {
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        return (new UserResource($user))
+            ->additional([
+                'message' => $message,
+                'access_token' => $token,
+                'token_type' => 'Bearer',
+            ])
+            ->response()
+            ->setStatusCode($status);
     }
 }
