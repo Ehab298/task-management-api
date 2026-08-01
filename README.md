@@ -297,15 +297,6 @@ A Postman **collection** and an **environment file** are included in the [`postm
 1. Open Postman → **Import** → drag both files from the `postman/` folder.
 2. In the top-right environment selector, pick **Task Management - Local**.
 
-### Environment Variables
-
-| Variable | Value | Purpose |
-| -------- | ----- | ------- |
-| `url` | `http://127.0.0.1:8000/api/` | Base URL (trailing slash required) |
-| `TOKEN` | _paste your access token_ | Bearer token for Projects, Tasks, Dashboard |
-| `auth_secret_11sp` | _paste your access token_ | Bearer token for the **logout** request |
-| `project_id` / `task_id` | `1` | Optional convenience ids |
-
 ### How to authenticate
 
 1. Send **Auth user → register** (or **login**).
