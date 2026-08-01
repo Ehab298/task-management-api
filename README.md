@@ -133,7 +133,7 @@ The project follows Laravel best practices and includes:
 Clone the repository
 
 ```bash
-git clone https://github.com/<your-username>/task-management-api.git
+https://github.com/Ehab298/task-management-api.git
 ```
 
 Move into the project
