@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\Admin\StudentController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\ProjectController;
@@ -37,4 +38,10 @@ Route::middleware('auth:sanctum')->group(function () {
     // Tasks (created within a project, otherwise standalone with global filtering)
     Route::post('/projects/{project}/tasks', [TaskController::class, 'store']);
     Route::apiResource('tasks', TaskController::class)->except('store');
+
+    // Admin-only user management
+    Route::middleware('role:admin')->prefix('admin')->group(function () {
+        Route::get('/students', [StudentController::class, 'index']);
+        Route::post('/students', [StudentController::class, 'store']);
+    });
 });
